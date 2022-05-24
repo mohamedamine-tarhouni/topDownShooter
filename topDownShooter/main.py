@@ -2,14 +2,45 @@ from hashlib import new
 import pygame
 import pygame_menu
 import sys
+import sqlite3
 from model.player import PLAYER
 from model.bullet import BULLET
+import model.menu as Menu
 from pygame_menu.examples import create_example_window
 pygame.init()
 player1 = PLAYER(400, 300, 32, 32)
 player2 = PLAYER(100, 100, 32, 32)
+connection = sqlite3.connect('score.db')
 
+cursor = connection.cursor()
 
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS score
+  (
+     Name    TEXT,
+     score     INT
+  ) 
+    ''')
+# send to database one query
+Best_User = ('Tesla', 2020)
+cursor.execute('INSERT INTO score VALUES (?,?)', Best_User)
+
+connection.commit()
+# print the first
+cursor.execute("SELECT * FROM score")
+# record = cursor.fetchone()
+# print all
+record = cursor.fetchall()
+# print a specific number of entry
+# record = cursor.fetchmany(2)
+
+# loop to print line by line
+# for records in record:
+    # print(record)
+
+print(record)
+
+connection.close()
 display_Scroll = [0, 0]
 player1_Bullets=[]
 player2_Bullets=[]
@@ -51,14 +82,15 @@ def start_the_game():
         pygame.display.update()
     pass
 
-menu = pygame_menu.Menu('Welcome', 400, 300,
-                       theme=pygame_menu.themes.THEME_BLUE)
+Menu.menuPrincipal(start_the_game)
+# menu = pygame_menu.Menu('Welcome', 800, 600,
+#                        theme=pygame_menu.themes.THEME_BLUE)
 
-menu.add.text_input('Name :', default='John Doe')
-menu.add.selector('Difficulty :', [('Hard', 1), ('Easy', 2)], onchange=set_difficulty)
-menu.add.button('Play', start_the_game)
-menu.add.button('Quit', pygame_menu.events.EXIT)
-surface = create_example_window('Example - Simple', (800, 600))
-menu.mainloop(surface)
+# menu.add.text_input('Name :', default='John Doe')
+# menu.add.selector('Difficulty :', [('Hard', 1), ('Easy', 2)], onchange=set_difficulty)
+# menu.add.button('Play', start_the_game)
+# menu.add.button('Quit', pygame_menu.events.EXIT)
+# surface = create_example_window('Example - Simple', (800, 600))
+# menu.mainloop(surface)
 
 
