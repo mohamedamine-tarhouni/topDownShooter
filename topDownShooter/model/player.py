@@ -1,32 +1,66 @@
 import pygame
 from model.bullet import BULLET
+import model.settings as stn
 
-class PLAYER:
-    def __init__(self, x, y, width, height):
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
+class PLAYER(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        pygame.sprite.Sprite.__init__(self)
         self.moveset = []
-        self.direction="left"
+        self.image=pygame.Surface((50,50))
+        self.image.fill((255, 0, 0))
+        self.rect=self.image.get_rect()
+        self.rect.center=(x,y)
+        self.directionX=1
+        self.directionY=0
 
     def main(self, display):
         pygame.draw.rect(display, (255, 0, 0),
-                         (self.x, self.y, self.width, self.height))
+                         self.rect)
+    def update(self):
+        self.prevX=0
 
-    def move(self):
+        #joueur va à gauche
         if self.moveset[0]:
-            self.x -= 5
-            self.direction="left"
+            self.rect.x -= 5
+            self.prevX=1
+            self.directionX=1
+            self.directionY=0
+            if self.rect.right<0:
+                self.rect.left=stn.WIDTH
+
+
+        #joueur va à droite
         if self.moveset[1]:
-            self.x += 5
-            self.direction="right"
+            self.rect.x += 5
+            self.prevX=1
+            self.directionX=-1
+            self.directionY=0
+            if self.rect.left>stn.WIDTH:
+                self.rect.right=0
+
+        #joueur va en haut
         if self.moveset[2]:
-            self.y -= 5
-            self.direction="up"
+            prevY=1
+            self.rect.y -= 5
+            if self.prevX<=0:
+                self.directionX=0
+            else:
+                prevY=0
+            self.directionY=prevY
+            if self.rect.bottom<0:
+                self.rect.top=stn.HEIGHT
+
+        #joueur va en bas
         if self.moveset[3]:
-            self.y += 5
-            self.direction="down"
+            prevY=-1
+            self.rect.y += 5
+            if self.prevX<=0:
+                self.directionX=0
+            else:
+                prevY=0
+            self.directionY=prevY
+            if self.rect.top>stn.HEIGHT:
+                self.rect.bottom=0
 
     def changeMoveSet(self, buttons):
-        self.moveset = [buttons[0],buttons[1],buttons[2],buttons[3],buttons[4]]
+        self.moveset = [buttons[0],buttons[1],buttons[2],buttons[3]]
