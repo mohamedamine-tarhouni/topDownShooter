@@ -13,9 +13,6 @@ class PLAYER(pygame.sprite.Sprite):
         self.directionX=1
         self.directionY=0
 
-    def main(self, display):
-        pygame.draw.rect(display, (255, 0, 0),
-                         self.rect)
     def update(self):
         self.prevX=0
 
