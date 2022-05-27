@@ -1,18 +1,18 @@
 import pygame
 from model.bullet import BULLET
-import model.settings as stn
+import settings as stn
+import os
 
 class PLAYER(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self, x, y,img):
         pygame.sprite.Sprite.__init__(self)
         self.moveset = []
-        self.image=pygame.Surface((50,50))
-        self.image.fill((255, 0, 0))
+        self.image=pygame.image.load(os.path.join(stn.img_folder,img)).convert()
+        self.image.set_colorkey(stn.BLUE)
         self.rect=self.image.get_rect()
         self.rect.center=(x,y)
         self.directionX=1
         self.directionY=0
-
     def update(self):
         self.prevX=0
 

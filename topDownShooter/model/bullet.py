@@ -1,13 +1,15 @@
 import pygame
-class BULLET:
+import settings as stn
+class BULLET(pygame.sprite.Sprite):
     def __init__(self,x,y,directionBX,directionBY):
-        self.x=x
-        self.y=y
+        pygame.sprite.Sprite.__init__(self)
+        self.image=pygame.Surface((40,40))
+        self.image.fill(stn.BLUE)
+        self.rect=self.image.get_rect()
+        self.rect.center=(x,y)
         self.speed=10
         self.directionBX=directionBX
         self.directionBY=directionBY
-    def main(self,display):
-        self.x-=self.directionBX*self.speed
-        self.y-=self.directionBY*self.speed
-        
-        pygame.draw.circle(display,(0,0,0),(self.x,self.y),5)
+    def update(self):
+        self.rect.x-=self.directionBX*self.speed
+        self.rect.y-=self.directionBY*self.speed

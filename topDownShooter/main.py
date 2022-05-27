@@ -1,10 +1,11 @@
+from pickle import TRUE
 import pygame
 import sys
 import sqlite3
 from model.player import PLAYER
 from model.bullet import BULLET
 import model.menu as Menu
-import model.settings as stn
+import settings as stn
 pygame.init()
 # connection = sqlite3.connect('score.db')
 
@@ -48,17 +49,16 @@ def set_difficulty(value, difficulty):
 clock = pygame.time.Clock()
 
 def start_the_game():
-    all_sprites = pygame.sprite.Group()
-    player1 = PLAYER(400, 300) #joueur1
-    player2 = PLAYER(100, 100) #joueur2
+    all_sprites = pygame.sprite.Group() # tous les sprites
+    bullets_P1=pygame.sprite.Group() #la sprite des bulletes du joueur 1 
+    bullets_P2=pygame.sprite.Group() #la sprite des bulletes du joueur 2
+    player1 = PLAYER(400, 300,"Man 1.png") #joueur1
+    player2 = PLAYER(100, 100,"Man 1.png") #joueur2
     all_sprites.add(player1)#ajout du joueur 1 dans le groupe des sprites
     all_sprites.add(player2)#ajout du joueur 2 dans le groupe des sprites
-    player1_Bullets=[] #liste des bullets du P1
-    player2_Bullets=[] #liste des bullets du P2
     
     while True:
-        display.fill((24, 164, 86)) # le fond d'écran
-        all_sprites.draw(display) #affichage de fond 
+
         for event in pygame.event.get(): #pour la fermeture du jeu avec le bouton "X"
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -66,10 +66,10 @@ def start_the_game():
             if event.type==pygame.KEYDOWN:
                 #P1 tir
                 if event.key==pygame.K_RETURN:
-                    player1_Bullets.append(BULLET(player1.rect.x,player1.rect.y,player1.directionX,player1.directionY))
+                    bullets_P1.add(BULLET(player1.rect.x,player1.rect.y,player1.directionX,player1.directionY))
                 #P2 tir
                 if event.key==pygame.K_SPACE:
-                    player2_Bullets.append(BULLET(player2.rect.x,player2.rect.y,player2.directionX,player2.directionY))
+                    bullets_P2.add(BULLET(player2.rect.x,player2.rect.y,player2.directionX,player2.directionY))
         #Récuperation des boutons
         keys = pygame.key.get_pressed()
         #listes des controlles des joueurs
@@ -81,14 +81,23 @@ def start_the_game():
         player1.changeMoveSet(player1MoveSet)
         player2.changeMoveSet(player2MoveSet)
         #mise à jour des mouvement
+        bullets_P1.update()
+        bullets_P2.update()
         all_sprites.update()
-        #traitement de chaque bullet
-        for bullet in player1_Bullets:
-            bullet.main(display)
-        for bullet in player2_Bullets:
-            bullet.main(display)
+        #collision des bullets avec joueur2
+        hit_On_P1=pygame.sprite.spritecollide(player1,bullets_P2,True)
+        if hit_On_P1:
+            print("joueur 1 touché par un bullet")
+        #collision des bullets avec joueur2
+        hit_On_P2=pygame.sprite.spritecollide(player2,bullets_P1,True)
+        if hit_On_P2:
+            print("joueur 2 touché par un bullet")
         #60 FPS
         clock.tick(60)
+        display.fill(stn.BLACK) # le fond d'écran
+        all_sprites.draw(display) #affichage des sprites 
+        bullets_P1.draw(display) #affichage des sprites bullets du joueur 1
+        bullets_P2.draw(display) #affichage des sprites bullets du joueur 2
         pygame.display.update()
     pass
 
