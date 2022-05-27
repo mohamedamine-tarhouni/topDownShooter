@@ -4,8 +4,9 @@ import settings as stn
 import os
 
 class PLAYER(pygame.sprite.Sprite):
-    def __init__(self, x, y,img):
+    def __init__(self, x, y,img,score):
         pygame.sprite.Sprite.__init__(self)
+        self.score=score
         self.moveset = []
         self.image=pygame.image.load(os.path.join(stn.img_folder,img)).convert()
         self.image.set_colorkey(stn.BLUE)
@@ -61,3 +62,5 @@ class PLAYER(pygame.sprite.Sprite):
 
     def changeMoveSet(self, buttons):
         self.moveset = [buttons[0],buttons[1],buttons[2],buttons[3]]
+    def updateScore(self,score):
+        self.score+=score

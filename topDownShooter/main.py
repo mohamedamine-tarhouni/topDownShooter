@@ -52,8 +52,8 @@ def start_the_game():
     all_sprites = pygame.sprite.Group() # tous les sprites
     bullets_P1=pygame.sprite.Group() #la sprite des bulletes du joueur 1 
     bullets_P2=pygame.sprite.Group() #la sprite des bulletes du joueur 2
-    player1 = PLAYER(400, 300,"Man 1.png") #joueur1
-    player2 = PLAYER(100, 100,"Man 1.png") #joueur2
+    player1 = PLAYER(400, 300,"Man 1.png",100) #joueur1
+    player2 = PLAYER(100, 100,"Man 1.png",100) #joueur2
     all_sprites.add(player1)#ajout du joueur 1 dans le groupe des sprites
     all_sprites.add(player2)#ajout du joueur 2 dans le groupe des sprites
     
@@ -87,10 +87,14 @@ def start_the_game():
         #collision des bullets avec joueur2
         hit_On_P1=pygame.sprite.spritecollide(player1,bullets_P2,True)
         if hit_On_P1:
+            player2.updateScore(50)
+            print("player 2 :",player2.score)
             print("joueur 1 touché par un bullet")
         #collision des bullets avec joueur2
         hit_On_P2=pygame.sprite.spritecollide(player2,bullets_P1,True)
         if hit_On_P2:
+            player1.updateScore(50)
+            print("player 1 :",player1.score)
             print("joueur 2 touché par un bullet")
         #60 FPS
         clock.tick(60)
