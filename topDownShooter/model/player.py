@@ -4,12 +4,18 @@ import settings as stn
 import os
 
 class PLAYER(pygame.sprite.Sprite):
-    def __init__(self, x, y,img,score):
+    def __init__(self, x, y,img,name,score=0,HP=500,Dmg=50,atkSpeed=15):
         pygame.sprite.Sprite.__init__(self)
+        self.name=name
         self.score=score
+        self.HP=HP
+        self.Dmg=Dmg
+        self.atkSpeed=atkSpeed
         self.moveset = []
-        self.image=pygame.image.load(os.path.join(stn.img_folder,img)).convert()
-        self.image.set_colorkey(stn.BLUE)
+        self.image=pygame.Surface((60,40))
+        self.image.fill(stn.RED)
+        # self.image=pygame.image.load(os.path.join(stn.img_folder,img)).convert()
+        self.image.set_colorkey(stn.BLACK)
         self.rect=self.image.get_rect()
         self.rect.center=(x,y)
         self.directionX=1

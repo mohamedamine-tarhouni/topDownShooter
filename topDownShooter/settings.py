@@ -10,4 +10,5 @@ WIDTH=800
 HEIGHT=600
 #le fichier des images
 game_folder=os.path.dirname(__file__)
-img_folder=os.path.join(game_folder,"img")
+img_folder=game_folder
+# img_folder=os.path.join(game_folder,"img")

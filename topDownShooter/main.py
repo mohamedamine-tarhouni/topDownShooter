@@ -1,4 +1,3 @@
-from pickle import TRUE
 import pygame
 import sys
 import sqlite3
@@ -52,8 +51,8 @@ def start_the_game():
     all_sprites = pygame.sprite.Group() # tous les sprites
     bullets_P1=pygame.sprite.Group() #la sprite des bulletes du joueur 1 
     bullets_P2=pygame.sprite.Group() #la sprite des bulletes du joueur 2
-    player1 = PLAYER(400, 300,"Man 1.png",100) #joueur1
-    player2 = PLAYER(100, 100,"Man 1.png",100) #joueur2
+    player1 = PLAYER(400, 300,"Man 1.png","player 1",atkSpeed=50) #joueur1
+    player2 = PLAYER(100, 100,"Man 1.png","player 2") #joueur2
     all_sprites.add(player1)#ajout du joueur 1 dans le groupe des sprites
     all_sprites.add(player2)#ajout du joueur 2 dans le groupe des sprites
     
@@ -66,10 +65,10 @@ def start_the_game():
             if event.type==pygame.KEYDOWN:
                 #P1 tir
                 if event.key==pygame.K_RETURN:
-                    bullets_P1.add(BULLET(player1.rect.x,player1.rect.y,player1.directionX,player1.directionY))
+                    bullets_P1.add(BULLET(player1.rect.x,player1.rect.y,player1.directionX,player1.directionY,50))
                 #P2 tir
                 if event.key==pygame.K_SPACE:
-                    bullets_P2.add(BULLET(player2.rect.x,player2.rect.y,player2.directionX,player2.directionY))
+                    bullets_P2.add(BULLET(player2.rect.x,player2.rect.y,player2.directionX,player2.directionY,100))
         #Récuperation des boutons
         keys = pygame.key.get_pressed()
         #listes des controlles des joueurs
