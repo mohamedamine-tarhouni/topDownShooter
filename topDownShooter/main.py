@@ -1,5 +1,6 @@
 import pygame
 import sys
+# import screen
 import sqlite3
 from model.player import PLAYER
 from model.bullet import BULLET
@@ -46,18 +47,38 @@ def set_difficulty(value, difficulty):
     # Do the job here !
     pass
 clock = pygame.time.Clock()
+# create a font object.
+# 1st parameter is the font file
+# which is present in pygame.
+# 2nd parameter is size of the font
+font = pygame.font.Font('freesansbold.ttf', 32)
+ 
 
 def start_the_game():
+
     all_sprites = pygame.sprite.Group() # tous les sprites
     bullets_P1=pygame.sprite.Group() #la sprite des bulletes du joueur 1 
     bullets_P2=pygame.sprite.Group() #la sprite des bulletes du joueur 2
-    player1 = PLAYER(400, 300,"Man 1.png","player 1",atkSpeed=50) #joueur1
-    player2 = PLAYER(100, 100,"Man 1.png","player 2") #joueur2
+    player1 = PLAYER(400, 300,"Man 1.png","Midouch",atkSpeed=50) #joueur1
+    player2 = PLAYER(100, 100,"Man 1.png","CDM") #joueur2
+
     all_sprites.add(player1)#ajout du joueur 1 dans le groupe des sprites
     all_sprites.add(player2)#ajout du joueur 2 dans le groupe des sprites
     
     while True:
-
+        # create a text surface object,
+        # on which text is drawn on it.
+        text1 = font.render(player1.name+" : "+str(player1.score), True, stn.GREEN, stn.BLUE)
+        
+        # create a rectangular object for the
+        # text surface object
+        textRect1 = text1.get_rect()
+        
+        # set the center of the rectangular object.
+        textRect1.topleft = (0,0)
+        text2 = font.render(player2.name+" : "+str(player2.score), True, stn.GREEN, stn.BLUE)
+        textRect2 = text2.get_rect()
+        textRect2.topright = (stn.WIDTH,0)
         for event in pygame.event.get(): #pour la fermeture du jeu avec le bouton "X"
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -101,6 +122,11 @@ def start_the_game():
         all_sprites.draw(display) #affichage des sprites 
         bullets_P1.draw(display) #affichage des sprites bullets du joueur 1
         bullets_P2.draw(display) #affichage des sprites bullets du joueur 2
+        # copying the text surface object
+        # to the display surface object
+        # at the center coordinate.
+        display.blit(text1, textRect1)
+        display.blit(text2, textRect2)
         pygame.display.update()
     pass
 
