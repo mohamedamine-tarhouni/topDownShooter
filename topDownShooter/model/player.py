@@ -1,18 +1,18 @@
+from random import randint
 import pygame
-from model.bullet import BULLET
 import settings as stn
-import os
 
 class PLAYER(pygame.sprite.Sprite):
-    def __init__(self, x, y,img,name,score=0,HP=500,Dmg=50,atkSpeed=15):
+    def __init__(self, x, y,img,name,score=0,HP=500.0,Dmg=50,atkSpeed=15):
         pygame.sprite.Sprite.__init__(self)
         self.name=name
         self.score=score
         self.HP=HP
+        self.maxHP=HP
         self.Dmg=Dmg
         self.atkSpeed=atkSpeed
         self.moveset = []
-        self.image=pygame.Surface((60,40))
+        self.image=pygame.Surface((60,60))
         self.image.fill(stn.RED)
         # self.image=pygame.image.load(os.path.join(stn.img_folder,img)).convert()
         self.image.set_colorkey(stn.BLACK)
@@ -20,6 +20,7 @@ class PLAYER(pygame.sprite.Sprite):
         self.rect.center=(x,y)
         self.directionX=1
         self.directionY=0
+        self.isDead=False
     def update(self):
         self.prevX=0
 
@@ -70,3 +71,26 @@ class PLAYER(pygame.sprite.Sprite):
         self.moveset = [buttons[0],buttons[1],buttons[2],buttons[3]]
     def updateScore(self,score):
         self.score+=score
+    def decreaseScore(self,score):
+        self.score-=score
+        if self.score<0:
+            self.score=0
+    def increaseHp(self,HpAdded):
+        self.HP+=HpAdded
+        if self.HP>=self.maxHP:
+            self.HP=self.maxHP
+
+    def decreaseHP(self,dmg):
+        self.HP-=dmg
+        if self.HP<=0:
+            self.isDead=True
+            self.HP=0
+    def respawn(self):
+        if self.isDead:
+            self.decreaseScore(100)
+            x=randint(50,stn.WIDTH-50)
+            y=randint(50,stn.HEIGHT-50)
+            self.rect.center=(x,y)
+            self.HP=self.maxHP
+            self.isDead=False
+
