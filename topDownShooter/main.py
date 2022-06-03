@@ -1,7 +1,7 @@
 import pygame
 import sys
 # import screen
-import sqlite3
+
 from model.collisions import bullet_Hit_Player
 # from model.player import PLAYER
 from model.bullet import BULLET
@@ -9,40 +9,6 @@ import model.menu as Menu
 import model.displays as dsp
 import settings as stn
 pygame.init()
-# connection = sqlite3.connect('score.db')
-
-# cursor = connection.cursor()
-# cursor.execute('''
-# CREATE TABLE IF NOT EXISTS ScoreBoard
-#   (
-#         Player1Name    TEXT,
-#         Player2Name    TEXT,
-#         Player1Score    INT,
-#         Player2Score    INT
-#   ); 
-#     '''
-#     )
-# # send to database one query
-# Game = ('midouch', 'amine',2365,259)
-# # cursor.execute('INSERT INTO score VALUES (?,?)', Best_User)
-# cursor.execute('INSERT INTO ScoreBoard VALUES (?,?,?,?)', Game)
-
-# connection.commit()
-# # print the first
-# cursor.execute("SELECT * FROM ScoreBoard")
-# # record = cursor.fetchone()
-# # print all
-# record = cursor.fetchall()
-# # print a specific number of entry
-# # record = cursor.fetchmany(2)
-
-# # loop to print line by line
-# # for records in record:
-#     # print(record)
-
-# print(record)
-
-# connection.close()
 
 display = pygame.display.set_mode((stn.WIDTH, stn.HEIGHT))
 def set_difficulty(value, difficulty):
@@ -113,9 +79,15 @@ def start_the_game():
         display.blit(textHP1, textRectHP1)
         display.blit(text2, textRect2)
         display.blit(textHP2, textRectHP2)
+        if stn.player2.lives<=0:
+            print("dead")
+            dsp.displayGameOver()
+            break
         pygame.display.update()
+        
     pass
-
+# start_the_game()
 Menu.menuPrincipal(start_the_game)
 # Menu.changePlayer1()
+
 
