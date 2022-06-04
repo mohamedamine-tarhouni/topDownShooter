@@ -3,12 +3,14 @@ import pygame
 import settings as stn
 
 class PLAYER(pygame.sprite.Sprite):
-    def __init__(self, x, y,img,name,score=0,HP=500.0,Dmg=50,atkSpeed=15,lives=10):
+    def __init__(self, x, y,img,name,score=0
+    ,HP=500.0,
+    Dmg=50,atkSpeed=15,lives=1):
         pygame.sprite.Sprite.__init__(self)
         self.name=name
         self.score=score
-        self.HP=HP
         self.maxHP=HP
+        self.HP=self.maxHP
         self.lives=lives
         self.Dmg=Dmg
         self.atkSpeed=atkSpeed

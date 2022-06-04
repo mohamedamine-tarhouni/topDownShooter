@@ -32,21 +32,3 @@ def displayHp(player, textColor=stn.BLUE, bgColor=stn.GREEN):
     return textRect, text
 
 # def displayScoreBoard():
-def scoreEndGame(str):
-    menu = pygame_menu.Menu('Game Over', stn.WIDTH, stn.HEIGHT,
-                            theme=pygame_menu.themes.THEME_BLUE,)
-    menu.add.button(str, displayGameOver)
-    return menu
-
-
-
-def displayGameOver(textColor=stn.BLUE, bgColor=stn.GREEN):
-    menu = pygame_menu.Menu('Scores', stn.WIDTH, stn.HEIGHT,
-                            theme=pygame_menu.themes.THEME_BLUE,)
-    surface = create_example_window('TopDownShooter', (stn.WIDTH, stn.HEIGHT))
-    scores=db.getScores()
-    for i in scores:
-        change_Player1_menu=scoreEndGame(i[0]+ " : "+str(i[2])+", "+i[1]+" : "+str(i[3]))   
-        menu.add.button(i[0]+ " : "+str(i[2])+", "+i[1]+" : "+str(i[3]), change_Player1_menu)
-        menu.add.button("home", pygame_menu.events.RESET)
-    menu.mainloop(surface)

@@ -8,6 +8,7 @@ from model.bullet import BULLET
 import model.menu as Menu
 import model.displays as dsp
 import settings as stn
+import model.database as db
 pygame.init()
 
 display = pygame.display.set_mode((stn.WIDTH, stn.HEIGHT))
@@ -79,15 +80,21 @@ def start_the_game():
         display.blit(textHP1, textRectHP1)
         display.blit(text2, textRect2)
         display.blit(textHP2, textRectHP2)
-        if stn.player2.lives<=0:
+        if stn.player2.lives<=0 or stn.player1.lives<=0:
             print("dead")
-            dsp.displayGameOver()
+            if stn.player1.score<stn.player2.score:
+                string=stn.player2.name+" is the winner with "+str(stn.player2.score)+" score !!!"
+            else:
+                string=stn.player1.name+" is the winner with "+str(stn.player1.score)+" !!!"
+            db.insertMatchData(stn.player1,stn.player2)
+            stn.player1,stn.player2=stn.InitSettings()
+            Menu.scoreEndGame(start_the_game,string)
             break
         pygame.display.update()
         
     pass
 # start_the_game()
-Menu.menuPrincipal(start_the_game)
+Menu.menuPrincipal(start_the_game,True)
 # Menu.changePlayer1()
 
 
