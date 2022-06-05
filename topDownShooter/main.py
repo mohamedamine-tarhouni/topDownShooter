@@ -19,7 +19,9 @@ clock = pygame.time.Clock()
  
 
 def start_the_game():
-
+    stn.player1,stn.player2=stn.InitSettings()
+    print(stn.player1.name)
+    print(stn.player2.name)
     all_sprites = pygame.sprite.Group() # tous les sprites
     bullets_P1=pygame.sprite.Group() # la sprite des bulletes du joueur 1 
     bullets_P2=pygame.sprite.Group() # la sprite des bulletes du joueur 2
@@ -45,10 +47,10 @@ def start_the_game():
             if event.type==pygame.KEYDOWN:
                 #P1 tir
                 if event.key==pygame.K_RETURN:
-                    bullets_P1.add(BULLET(stn.player1.rect.x,stn.player1.rect.y,stn.player1.directionX,stn.player1.directionY,50))
+                    bullets_P1.add(BULLET(stn.player1.rect.x,stn.player1.rect.y,stn.player1.directionX,stn.player1.directionY,stn.player1.atkSpeed))
                 #P2 tir
                 if event.key==pygame.K_SPACE:
-                    bullets_P2.add(BULLET(stn.player2.rect.x,stn.player2.rect.y,stn.player2.directionX,stn.player2.directionY,100))
+                    bullets_P2.add(BULLET(stn.player2.rect.x,stn.player2.rect.y,stn.player2.directionX,stn.player2.directionY,stn.player2.atkSpeed))
         #Récuperation des boutons
         keys = pygame.key.get_pressed()
         #listes des controlles des joueurs
@@ -85,7 +87,7 @@ def start_the_game():
             if stn.player1.score<stn.player2.score:
                 string=stn.player2.name+" is the winner with "+str(stn.player2.score)+" score !!!"
             else:
-                string=stn.player1.name+" is the winner with "+str(stn.player1.score)+" !!!"
+                string=stn.player1.name+" is the winner with "+str(stn.player1.score)+" score !!!"
             db.insertMatchData(stn.player1,stn.player2)
             stn.player1,stn.player2=stn.InitSettings()
             Menu.scoreEndGame(start_the_game,string)
