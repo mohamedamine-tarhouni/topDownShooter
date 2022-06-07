@@ -5,10 +5,8 @@ cursor = connection.cursor()
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS ScoreBoard
   (
-        Player1Name    TEXT,
-        Player2Name    TEXT,
-        Player1Score    INT,
-        Player2Score    INT
+        PlayerName    TEXT,
+        PlayerScore    INT
   ); 
     '''
     )
@@ -73,12 +71,12 @@ def insertValue(player,pos):
       connection.commit()
       cursor.execute('INSERT INTO ConfigurationP2 VALUES (?,?,?,?,?)', playerData)
       connection.commit()
-def insertMatchData(player1,player2):
+def insertMatchData(player1):
     connection = sqlite3.connect('score.db')
     cursor = connection.cursor()
-    Game = (player1.name, player2.name,player1.score,player2.score)
+    Game = (player1.name,player1.score)
     # # cursor.execute('INSERT INTO score VALUES (?,?)', Best_User)
-    cursor.execute('INSERT INTO ScoreBoard VALUES (?,?,?,?)', Game)
+    cursor.execute('INSERT INTO ScoreBoard VALUES (?,?)', Game)
 
     connection.commit()
 # def insertValue(column,value):
@@ -89,7 +87,7 @@ def insertMatchData(player1,player2):
 def getScores():
     connection = sqlite3.connect('score.db')
     cursor = connection.cursor()
-    cursor.execute("SELECT * FROM ScoreBoard")
+    cursor.execute("SELECT * FROM ScoreBoard order by PlayerScore DESC")
     record = cursor.fetchall()
     connection.close()
     return record

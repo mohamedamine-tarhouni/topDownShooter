@@ -9,13 +9,10 @@ from settings import BLUE, GREEN, HEIGHT, WIDTH,player1,player2
 
 def menuPrincipal(funcStart,loop):
     ScoreBoard=displayScoreBoard()
-    change_Player1_menu=changePlayer1()
-    change_Player2_menu=changePlayer2()
+    change_Player1_menu=changePlayer(player1)
+    change_Player2_menu=changePlayer(player2)
     menu = pygame_menu.Menu('Welcome', WIDTH, HEIGHT,
                         theme=pygame_menu.themes.THEME_BLUE)
-    
-#     menu.add.text_input('Name :', default='',onchange=changeMyPlayerName)
-    # menu.add.selector('Difficulty :', [('Hard', 1), ('Easy', 2)], onchange=set_difficulty)
     menu.add.button('Play', funcStart)
     menu.add.button('Change Player 1', change_Player1_menu)
     menu.add.button('Change Player 2', change_Player2_menu)
@@ -26,26 +23,16 @@ def menuPrincipal(funcStart,loop):
         menu.mainloop(surface)
     else:
         return menu
-def changePlayer1():
-    change_Player1_menu = pygame_menu.Menu(player1.name, WIDTH, HEIGHT,
+def changePlayer(player):
+    change_Player_menu = pygame_menu.Menu(player.name, WIDTH, HEIGHT,
     theme=pygame_menu.themes.THEME_BLUE)
-    change_Player1_menu.add.text_input('Name :', default=player1.name,onchange=player1.changeName)
-    change_Player1_menu.add.text_input('MAXHP :', default=str(player1.maxHP),onchange=player1.changePlayerHP)
-    change_Player1_menu.add.text_input('Damage :', default=str(player1.Dmg),onchange=player1.changePlayerDamage)
-    change_Player1_menu.add.text_input('Attack Speed :', default=str(player1.atkSpeed),onchange=player1.changePlayeratkspd)
-    change_Player1_menu.add.text_input('Lives :', default=str(player1.lives),onchange=player1.changePlayerLives)
-    change_Player1_menu.add.button('Changer', pygame_menu.events.BACK)
-    return change_Player1_menu
-def changePlayer2():
-    change_Player2_menu = pygame_menu.Menu(player2.name, WIDTH, HEIGHT,
-    theme=pygame_menu.themes.THEME_BLUE)
-    change_Player2_menu.add.text_input('Name :', default=player2.name,onchange=player2.changeName)
-    change_Player2_menu.add.text_input('MAXHP :', default=str(player2.maxHP),onchange=player2.changePlayerHP)
-    change_Player2_menu.add.text_input('Damage :', default=str(player2.Dmg),onchange=player2.changePlayerDamage)
-    change_Player2_menu.add.text_input('Attack Speed :', default=str(player2.atkSpeed),onchange=player2.changePlayeratkspd)
-    change_Player2_menu.add.text_input('Lives :', default=str(player2.lives),onchange=player2.changePlayerLives)
-    change_Player2_menu.add.button('Changer', pygame_menu.events.BACK)
-    return change_Player2_menu
+    change_Player_menu.add.text_input('Name :', default=player.name,onchange=player.changeName)
+    change_Player_menu.add.text_input('MAXHP :', default=str(player.maxHP),onchange=player.changePlayerHP)
+    change_Player_menu.add.text_input('Damage :', default=str(player.Dmg),onchange=player.changePlayerDamage)
+    change_Player_menu.add.text_input('Attack Speed :', default=str(player.atkSpeed),onchange=player.changePlayeratkspd)
+    change_Player_menu.add.text_input('Lives :', default=str(player.lives),onchange=player.changePlayerLives)
+    change_Player_menu.add.button('Changer', pygame_menu.events.BACK)
+    return change_Player_menu
 
 def scoreOfGame(str,title):
     menu = pygame_menu.Menu(title, WIDTH, HEIGHT,
@@ -70,9 +57,9 @@ def displayScoreBoard():
     # surface = create_example_window('TopDownShooter', (WIDTH, HEIGHT))
     scores=db.getScores()
     for i in scores:
-        displayScoreMenu=scoreOfGame(i[0]+ " : "+str(i[2])+", "+i[1]+" : "+str(i[3]),"Score")   
-        menu.add.button(i[0]+ " : "+str(i[2])+", "+i[1]+" : "+str(i[3]), displayScoreMenu)
-    menu.add.button("home", pygame_menu.events.BACK)
+        displayScoreMenu=scoreOfGame(i[0]+ " : "+str(i[1]),"Score")   
+        menu.add.button(i[0]+ " : "+str(i[1]), displayScoreMenu)
+    menu.add.button("Menu Principal", pygame_menu.events.BACK)
     # menu.mainloop(surface)
     return menu
 

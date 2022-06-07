@@ -1,3 +1,4 @@
+from audioop import mul
 from random import randint
 import pygame
 import settings as stn
@@ -75,12 +76,14 @@ class PLAYER(pygame.sprite.Sprite):
     def changeMoveSet(self, buttons):
         self.moveset = [buttons[0],buttons[1],buttons[2],buttons[3]]
     def updateScore(self,score):
-        multiplier=99999999
-        multiplier=multiplier//self.maxHP
-        multiplier=multiplier//self.Dmg
-        multiplier=multiplier//self.atkSpeed
-        score=score//self.lives
-        self.score+=score*multiplier
+        # multiplier=200000
+        multiplier=50000//(((self.maxHP+self.atkSpeed+self.Dmg+self.lives)))
+        
+        # multiplier=multiplier//self.maxHP
+        # multiplier=multiplier//self.Dmg
+        # multiplier=multiplier//self.atkSpeed
+        # score=score//self.lives
+        self.score+=multiplier*score+2500
     def decreaseScore(self,score):
         self.score-=score
         if self.score<0:
@@ -89,20 +92,24 @@ class PLAYER(pygame.sprite.Sprite):
         self.HP+=HpAdded
         if self.HP>=self.maxHP:
             self.HP=self.maxHP
-
+    def decreaseLives(self):
+        self.lives-=1
+        if(self.lives<=0):
+            self.decreaseScore(self.score//2)
     def decreaseHP(self,dmg):
         self.HP-=dmg
         if self.HP<=0:
             self.isDead=True
             self.HP=0
-    def respawn(self):
+    def respawn(self,player):
         if self.isDead:
             self.decreaseScore(100)
             x=randint(50,stn.WIDTH-50)
             y=randint(50,stn.HEIGHT-50)
             self.rect.center=(x,y)
             self.HP=self.maxHP
-            self.lives-=1
+            self.decreaseLives()
+            player.updateScore(500)
             self.isDead=False
     def changeName(self,name):
         if(name!=""):

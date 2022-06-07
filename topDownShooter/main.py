@@ -86,9 +86,10 @@ def start_the_game():
             print("dead")
             if stn.player1.score<stn.player2.score:
                 string=stn.player2.name+" is the winner with "+str(stn.player2.score)+" score !!!"
+                db.insertMatchData(stn.player2)
             else:
                 string=stn.player1.name+" is the winner with "+str(stn.player1.score)+" score !!!"
-            db.insertMatchData(stn.player1,stn.player2)
+                db.insertMatchData(stn.player1)
             stn.player1,stn.player2=stn.InitSettings()
             Menu.scoreEndGame(start_the_game,string)
             break
