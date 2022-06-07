@@ -7,7 +7,7 @@ import model.database as db
 class PLAYER(pygame.sprite.Sprite):
     def __init__(self, x, y,img,name,pos,score=0
     ,HP=500.0,
-    Dmg=50,atkSpeed=15,lives=1):
+    Dmg=50,atkSpeed=15,lives=1,speed=15):
         pygame.sprite.Sprite.__init__(self)
         self.name=name
         self.score=score
@@ -16,6 +16,7 @@ class PLAYER(pygame.sprite.Sprite):
         self.lives=lives
         self.Dmg=Dmg
         self.atkSpeed=atkSpeed
+        self.speed=speed
         self.pos=pos
         self.moveset = []
         self.image=pygame.Surface((60,60))
@@ -32,7 +33,7 @@ class PLAYER(pygame.sprite.Sprite):
 
         #joueur va à gauche
         if self.moveset[0]:
-            self.rect.x -= 5
+            self.rect.x -= self.speed
             self.prevX=1
             self.directionX=1
             self.directionY=0
@@ -42,7 +43,7 @@ class PLAYER(pygame.sprite.Sprite):
 
         #joueur va à droite
         if self.moveset[1]:
-            self.rect.x += 5
+            self.rect.x += self.speed
             self.prevX=1
             self.directionX=-1
             self.directionY=0
@@ -52,7 +53,7 @@ class PLAYER(pygame.sprite.Sprite):
         #joueur va en haut
         if self.moveset[2]:
             prevY=1
-            self.rect.y -= 5
+            self.rect.y -= self.speed
             if self.prevX<=0:
                 self.directionX=0
             else:
@@ -64,7 +65,7 @@ class PLAYER(pygame.sprite.Sprite):
         #joueur va en bas
         if self.moveset[3]:
             prevY=-1
-            self.rect.y += 5
+            self.rect.y += self.speed
             if self.prevX<=0:
                 self.directionX=0
             else:
@@ -149,4 +150,13 @@ class PLAYER(pygame.sprite.Sprite):
             #on input change your value is returned here
             db.insertValue(self,self.pos)
         print('Player lives is', self.lives)
+
+
+        #changement de vitesse de déplacement
+    def changePlayerSpeed(self,speed):
+        if(speed!="" and speed.isnumeric()):
+            self.speed=int(speed)
+            #on input change your value is returned here
+            db.insertValue(self,self.pos)
+        print('Player speed is', self.speed)
 

@@ -31,6 +31,7 @@ def changePlayer(player):
     change_Player_menu.add.text_input('Damage :', default=str(player.Dmg),onchange=player.changePlayerDamage)
     change_Player_menu.add.text_input('Attack Speed :', default=str(player.atkSpeed),onchange=player.changePlayeratkspd)
     change_Player_menu.add.text_input('Lives :', default=str(player.lives),onchange=player.changePlayerLives)
+    change_Player_menu.add.text_input('Speed :', default=str(player.speed),onchange=player.changePlayerSpeed)
     change_Player_menu.add.button('Changer', pygame_menu.events.BACK)
     return change_Player_menu
 

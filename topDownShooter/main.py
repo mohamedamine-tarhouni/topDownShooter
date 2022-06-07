@@ -33,13 +33,17 @@ def start_the_game():
     while True:
         textRect1,text1=dsp.displayScore(stn.player1)
         textRectHP1,textHP1=dsp.displayHp(stn.player1)
+        textRectLives1,textLives1=dsp.displayLives(stn.player1)
         # set the center of the rectangular object.
         textRect1.topleft = (0,0)
         textRectHP1.topleft = (0,40)
+        textRectLives1.topleft = (0,70)
         textRect2,text2=dsp.displayScore(stn.player2)
         textRectHP2,textHP2=dsp.displayHp(stn.player2)
+        textRectLives2,textLives2=dsp.displayLives(stn.player2)
         textRect2.topright = (stn.WIDTH,0)
         textRectHP2.topright = (stn.WIDTH,40)
+        textRectLives2.topright = (stn.WIDTH,70)
         for event in pygame.event.get(): #pour la fermeture du jeu avec le bouton "X"
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -80,8 +84,10 @@ def start_the_game():
         # at the center coordinate.
         display.blit(text1, textRect1)
         display.blit(textHP1, textRectHP1)
+        display.blit(textLives1, textRectLives1)
         display.blit(text2, textRect2)
         display.blit(textHP2, textRectHP2)
+        display.blit(textLives2, textRectLives2)
         if stn.player2.lives<=0 or stn.player1.lives<=0:
             print("dead")
             if stn.player1.score<stn.player2.score:

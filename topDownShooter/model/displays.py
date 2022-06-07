@@ -7,12 +7,12 @@ import model.database as db
 from pygame_menu.examples import create_example_window
 
 
-def displayScore(player, textColor=stn.BLUE, bgColor=stn.GREEN):
+def displayScore(player, textColor=stn.GREEN, bgColor=stn.BLUE):
     font = pygame.font.Font('freesansbold.ttf', 32)
     # create a text surface object,
     # on which text is drawn on it.
     text = font.render(player.name+" : "+str(player.score),
-                       True, bgColor, textColor)
+                       True, textColor, bgColor)
 
     # create a rectangular object for the
     # text surface object
@@ -20,11 +20,22 @@ def displayScore(player, textColor=stn.BLUE, bgColor=stn.GREEN):
     return textRect, text
 
 
-def displayHp(player, textColor=stn.BLUE, bgColor=stn.GREEN):
-    font = pygame.font.Font('freesansbold.ttf', 32)
+def displayHp(player, textColor=stn.GREEN, bgColor=stn.BLUE):
+    font = pygame.font.Font('freesansbold.ttf', 24)
     # create a text surface object,
     # on which text is drawn on it.
-    text = font.render("HP : "+str(player.HP), True, bgColor, textColor)
+    text = font.render("HP : "+str(player.HP), True, textColor, bgColor)
+
+    # create a rectangular object for the
+    # text surface object
+    textRect = text.get_rect()
+    return textRect, text
+
+def displayLives(player, textColor=stn.GREEN, bgColor=stn.BLUE):
+    font = pygame.font.Font('freesansbold.ttf', 24)
+    # create a text surface object,
+    # on which text is drawn on it.
+    text = font.render("Lives : "+str(player.lives), True, textColor, bgColor)
 
     # create a rectangular object for the
     # text surface object

@@ -17,7 +17,8 @@ CREATE TABLE IF NOT EXISTS ConfigurationP2
         Player2Lives    INT,
         Player2HP    INT,
         Player2Dmg    INT,
-        Player2AtkSpeed    INT
+        Player2AtkSpeed    INT,
+        Player2Speed    INT
   ); 
     '''
     )
@@ -28,8 +29,9 @@ CREATE TABLE IF NOT EXISTS ConfigurationP1
         Player1Lives    INT,
         Player1HP    INT,
         Player1Dmg    INT,
-        Player1AtkSpeed    INT
-  ); 
+        Player1AtkSpeed    INT,
+        Player1Speed    INT
+  );
     '''
     )
 
@@ -60,16 +62,16 @@ def insertValue(player,pos):
     connection = sqlite3.connect('score.db')
     cursor = connection.cursor()
 
-    playerData=(player.name,player.lives,player.maxHP,player.Dmg,player.atkSpeed)
+    playerData=(player.name,player.lives,player.maxHP,player.Dmg,player.atkSpeed,player.speed)
     if pos==1:
       cursor.execute("DELETE FROM ConfigurationP1")
       connection.commit()
-      cursor.execute('INSERT INTO ConfigurationP1 VALUES (?,?,?,?,?)', playerData)
+      cursor.execute('INSERT INTO ConfigurationP1 VALUES (?,?,?,?,?,?)', playerData)
       connection.commit()
     else:
       cursor.execute("DELETE FROM ConfigurationP2")
       connection.commit()
-      cursor.execute('INSERT INTO ConfigurationP2 VALUES (?,?,?,?,?)', playerData)
+      cursor.execute('INSERT INTO ConfigurationP2 VALUES (?,?,?,?,?,?)', playerData)
       connection.commit()
 def insertMatchData(player1):
     connection = sqlite3.connect('score.db')

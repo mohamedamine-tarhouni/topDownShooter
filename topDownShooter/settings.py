@@ -17,16 +17,16 @@ img_folder=game_folder
     
 def InitSettings():
     player1Data=db.getPlayerData(1)
-    # print(player1Data)
+    print(player1Data)
     player2Data=db.getPlayerData(2)
     if player1Data:
-        player1 = PLAYER(WIDTH-50, HEIGHT-50,"Man 1.png",player1Data[0][0],1,score=0
-        ,HP=player1Data[0][2],Dmg=player1Data[0][3],atkSpeed=player1Data[0][4],lives=player1Data[0][1])
+        player1 = PLAYER(WIDTH-100, HEIGHT-100,"Man 1.png",player1Data[0][0],1,score=0
+        ,HP=player1Data[0][2],Dmg=player1Data[0][3],atkSpeed=player1Data[0][4],lives=player1Data[0][1],speed=player1Data[0][5])
     else:
-        player1 = PLAYER(WIDTH-50, HEIGHT-50,"Man 1.png","Midouch",1,atkSpeed=50) # joueur1
+        player1 = PLAYER(WIDTH-100, HEIGHT-100,"Man 1.png","Midouch",1,atkSpeed=50) # joueur1
     if player2Data:
         player2 = PLAYER(WIDTH-(player1.rect.x), HEIGHT-(player1.rect.y),"Man 1.png",player2Data[0][0],2,score=0
-        ,HP=player2Data[0][2],Dmg=player2Data[0][3],atkSpeed=player2Data[0][4],lives=player2Data[0][1])
+        ,HP=player2Data[0][2],Dmg=player2Data[0][3],atkSpeed=player2Data[0][4],lives=player2Data[0][1],speed=player2Data[0][5])
     else:
         player2 = PLAYER(WIDTH-(player1.rect.x), HEIGHT-(player1.rect.y),"Man 1.png","CDM",2) # joueur2
     return player1,player2
