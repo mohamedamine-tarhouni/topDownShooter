@@ -20,8 +20,6 @@ clock = pygame.time.Clock()
 
 def start_the_game():
     stn.player1,stn.player2=stn.InitSettings()
-    print(stn.player1.name)
-    print(stn.player2.name)
     all_sprites = pygame.sprite.Group() # tous les sprites
     bullets_P1=pygame.sprite.Group() # la sprite des bulletes du joueur 1 
     bullets_P2=pygame.sprite.Group() # la sprite des bulletes du joueur 2
@@ -31,6 +29,11 @@ def start_the_game():
     all_sprites.add(stn.player2) # ajout du joueur 2 dans le groupe des sprites
     
     while True:
+        stn.player1.setOpponent(stn.player2)
+        stn.player2.setOpponent(stn.player1)
+        # if stn.player2.isIA==True:
+        stn.player2.makeIABulltets(bullets_P2)
+        # print("player1 X = ",stn.player1.rect.x,"player1 Y = ",stn.player1.rect.y)
         textRect1,text1=dsp.displayScore(stn.player1)
         textRectHP1,textHP1=dsp.displayHp(stn.player1)
         textRectLives1,textLives1=dsp.displayLives(stn.player1)
@@ -53,8 +56,8 @@ def start_the_game():
                 if event.key==pygame.K_RETURN:
                     bullets_P1.add(BULLET(stn.player1.rect.x,stn.player1.rect.y,stn.player1.directionX,stn.player1.directionY,stn.player1.atkSpeed))
                 #P2 tir
-                if event.key==pygame.K_SPACE:
-                    bullets_P2.add(BULLET(stn.player2.rect.x,stn.player2.rect.y,stn.player2.directionX,stn.player2.directionY,stn.player2.atkSpeed))
+                if event.key==pygame.K_SPACE and stn.player2.isIA==False:
+                    stn.player2.bullets.add(BULLET(stn.player2.rect.x,stn.player2.rect.y,stn.player2.directionX,stn.player2.directionY,stn.player2.atkSpeed))
         #Récuperation des boutons
         keys = pygame.key.get_pressed()
         #listes des controlles des joueurs
@@ -67,10 +70,10 @@ def start_the_game():
         stn.player2.changeMoveSet(player2MoveSet)
         #mise à jour des mouvement
         bullets_P1.update()
-        bullets_P2.update()
+        stn.player2.bullets.update()
         all_sprites.update()
         # #collision des bullets avec joueur1
-        bullet_Hit_Player(stn.player2,stn.player1,bullets_P2)
+        bullet_Hit_Player(stn.player2,stn.player1,stn.player2.bullets)
         #collision des bullets avec joueur2
         bullet_Hit_Player(stn.player1,stn.player2,bullets_P1)
         #60 FPS
@@ -78,7 +81,7 @@ def start_the_game():
         display.fill(stn.BLACK) # le fond d'écran
         all_sprites.draw(display) #affichage des sprites 
         bullets_P1.draw(display) #affichage des sprites bullets du joueur 1
-        bullets_P2.draw(display) #affichage des sprites bullets du joueur 2
+        stn.player2.bullets.draw(display) #affichage des sprites bullets du joueur 2
         # copying the text surface object
         # to the display surface object
         # at the center coordinate.
