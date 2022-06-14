@@ -1,3 +1,4 @@
+from telnetlib import DO
 import pygame
 import sys
 import os,json
@@ -65,16 +66,16 @@ def start_the_game():
                 sys.exit()
                 pygame.QUIT
             if event.type==pygame.KEYDOWN:
-                #P1 tir
+                # #P1 tir
                 if event.key==pygame.K_RETURN:
                     bullets_P1.add(BULLET(stn.player1.rect.x,stn.player1.rect.y,stn.player1.directionX,stn.player1.directionY,stn.player1.atkSpeed))
                 #P2 tir
                 if event.key==pygame.K_SPACE and stn.player2.isIA==False:
                     stn.player2.bullets.add(BULLET(stn.player2.rect.x,stn.player2.rect.y,stn.player2.directionX,stn.player2.directionY,stn.player2.atkSpeed))
                     # HANDLES BUTTON PRESSES
-            if event.type == pygame.JOYBUTTONDOWN:
-                if event.button == button_keys['x']:
-                    bullets_P1.add(BULLET(stn.player1.rect.x,stn.player1.rect.y,stn.player1.directionX,stn.player1.directionY,stn.player1.atkSpeed))
+            # if event.type == pygame.JOYBUTTONDOWN:
+                # if event.button == button_keys['x']:
+                #     bullets_P1.add(BULLET(stn.player1.rect.x,stn.player1.rect.y,stn.player1.directionX,stn.player1.directionY,stn.player1.atkSpeed))
             if event.type == pygame.JOYBUTTONDOWN:
                 if event.button == button_keys['left_arrow']:
                     LEFT = True
@@ -117,16 +118,16 @@ def start_the_game():
                         DOWN = True
                     else:
                         DOWN = False
-            player1MoveSet=[LEFT, RIGHT,
-                       UP, DOWN]
+            # player1MoveSet=[LEFT, RIGHT,
+            #            UP, DOWN]
 
         #Application des moveset
-        stn.player1.changeMoveSet(player1MoveSet)
         #Récuperation des boutons
         keys = pygame.key.get_pressed()
         #listes des controlles des joueurs
-        # player1MoveSet=[keys[pygame.LE], keys[pygame.K_d],
-        #                 keys[pygame.K_z], keys[pygame.K_s]]
+        player1MoveSet=[keys[pygame.K_q] or LEFT, keys[pygame.K_d] or RIGHT,
+                        keys[pygame.K_z] or UP, keys[pygame.K_s] or DOWN]
+        stn.player1.changeMoveSet(player1MoveSet)
         player2MoveSet=[keys[pygame.K_h], keys[pygame.K_k],
                         keys[pygame.K_u], keys[pygame.K_j]]
         stn.player2.changeMoveSet(player2MoveSet)

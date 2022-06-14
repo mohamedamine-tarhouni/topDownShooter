@@ -34,7 +34,7 @@ def InitSettings():
         else:
             IA=False
         player2 = PLAYER(WIDTH-(player1.rect.x), HEIGHT-(player1.rect.y),"Man 1.png",player2Data[0][0],2,score=0
-        ,HP=player2Data[0][2],Dmg=player2Data[0][3],atkSpeed=player2Data[0][4],lives=player2Data[0][1],speed=player2Data[0][5],isIA=IA,color=MediumOrchid)
+        ,HP=player2Data[0][2],Dmg=player2Data[0][3],atkSpeed=player2Data[0][4],lives=player2Data[0][1],speed=player2Data[0][5],isIA=True,color=MediumOrchid)
     else:
         player2 = PLAYER(WIDTH-(player1.rect.x), HEIGHT-(player1.rect.y),"Man 1.png","CDM",2,isIA=True,color=MediumOrchid) # joueur2
     return player1,player2
