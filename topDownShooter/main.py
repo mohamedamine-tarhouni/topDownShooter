@@ -67,7 +67,7 @@ def start_the_game():
                 pygame.QUIT
             if event.type==pygame.KEYDOWN:
                 # #P1 tir
-                if event.key==pygame.K_RETURN:
+                if event.key==pygame.K_m:
                     bullets_P1.add(BULLET(stn.player1.rect.x,stn.player1.rect.y,stn.player1.directionX,stn.player1.directionY,stn.player1.atkSpeed))
                 #P2 tir
                 if event.key==pygame.K_SPACE and stn.player2.isIA==False:
