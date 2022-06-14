@@ -18,20 +18,18 @@ def set_difficulty(value, difficulty):
     pass
 clock = pygame.time.Clock()
 
-
+joysticks = []
+for i in range(pygame.joystick.get_count()):
+    joysticks.append(pygame.joystick.Joystick(i))
+for joystick in joysticks:
+    joystick.init()
+with open(os.path.join("ps4_keys.json"), 'r+') as file:
+    button_keys = json.load(file)
+# 0: Left analog horizonal, 1: Left Analog Vertical, 2: Right Analog Horizontal
+# 3: Right Analog Vertical 4: Left Trigger, 5: Right Trigger
+analog_keys = {0:0, 1:0, 2:0, 3:0, 4:-1, 5: -1 }
 def start_the_game():
     LEFT, RIGHT, UP, DOWN = False, False, False, False
-    #Initialize controller
-    joysticks = []
-    for i in range(pygame.joystick.get_count()):
-        joysticks.append(pygame.joystick.Joystick(i))
-    for joystick in joysticks:
-        joystick.init()
-    with open(os.path.join("ps4_keys.json"), 'r+') as file:
-        button_keys = json.load(file)
-    # 0: Left analog horizonal, 1: Left Analog Vertical, 2: Right Analog Horizontal
-    # 3: Right Analog Vertical 4: Left Trigger, 5: Right Trigger
-    analog_keys = {0:0, 1:0, 2:0, 3:0, 4:-1, 5: -1 }
     stn.player1,stn.player2=stn.InitSettings()
     all_sprites = pygame.sprite.Group() # tous les sprites
     bullets_P1=pygame.sprite.Group() # la sprite des bulletes du joueur 1 
@@ -121,13 +119,14 @@ def start_the_game():
                         DOWN = False
             player1MoveSet=[LEFT, RIGHT,
                        UP, DOWN]
-        # player1MoveSet=[keys[pygame.LE], keys[pygame.K_d],
-        #                 keys[pygame.K_z], keys[pygame.K_s]]
+
         #Application des moveset
         stn.player1.changeMoveSet(player1MoveSet)
         #Récuperation des boutons
         keys = pygame.key.get_pressed()
         #listes des controlles des joueurs
+        # player1MoveSet=[keys[pygame.LE], keys[pygame.K_d],
+        #                 keys[pygame.K_z], keys[pygame.K_s]]
         player2MoveSet=[keys[pygame.K_h], keys[pygame.K_k],
                         keys[pygame.K_u], keys[pygame.K_j]]
         stn.player2.changeMoveSet(player2MoveSet)
