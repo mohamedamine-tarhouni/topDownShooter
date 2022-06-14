@@ -167,6 +167,12 @@ class PLAYER(pygame.sprite.Sprite):
             #on input change your value is returned here
             db.insertValue(self,self.pos)
         print('Player speed is', self.speed)
+    
+    def setIA(self):
+        self.isIA=not(self.isIA)
+        print(self.isIA)
+        db.insertValue(self,self.pos)
+
     def setOpponent(self,opponent):
         self.opponent=opponent
     def makeIABulltets(self,bullets):
@@ -178,18 +184,18 @@ class PLAYER(pygame.sprite.Sprite):
         distY=self.rect.y-self.opponent.rect.y
         distanceX=abs(distX)
         distanceY=abs(distY)
-        print("distance x : ",distX)
-        print("distance y : ",distY)
-        print("distance absolute x : ",distanceX)
-        print("distance absolute y : ",distanceY)
+        # print("distance x : ",distX)
+        # print("distance y : ",distY)
+        # print("distance absolute x : ",distanceX)
+        # print("distance absolute y : ",distanceY)
         if distanceX<distanceY:
             if distX<0 and distanceX>advSpeed:
                 self.rect.x += advSpeed
-                if self.rect.left>stn.WIDTH:
+                if self.rect.left>stn.WIDTH-50:
                     self.rect.right=0
             elif distX>0 and distanceX>advSpeed:
                 self.rect.x -= advSpeed
-                if self.rect.right<0:
+                if self.rect.right<50:
                     self.rect.left=stn.WIDTH
             elif distanceX<=15:
                 print("on est en attaque X")
@@ -217,21 +223,21 @@ class PLAYER(pygame.sprite.Sprite):
         else:
             if distY<0 and distanceY>advSpeed:
                 self.rect.y += advSpeed
-                if self.rect.top>stn.HEIGHT:
+                if self.rect.top>stn.HEIGHT-50:
                     self.rect.bottom=0
             elif distY>0 and distanceY>advSpeed:
                 self.rect.y -= advSpeed
-                if self.rect.bottom<0:
+                if self.rect.bottom<50:
                     self.rect.top=stn.HEIGHT
             elif distanceY<=15:
-                print("on est en attaque Y")
+                # print("on est en attaque Y")
                 if distX<0:
                     current_time = pygame.time.get_ticks()
                     current_time+=5
                     self.directionX=-1
                     self.directionY=0
-                    print("previous time  ",self.previous_time)
-                    print("current time : ",current_time)
+                    # print("previous time  ",self.previous_time)
+                    # print("current time : ",current_time)
                     if current_time % 15==0:
                         self.bullets.add(blt.BULLET(self.rect.x,self.rect.y,self.directionX,self.directionY,self.atkSpeed))
                         self.previous_time=current_time
@@ -240,8 +246,8 @@ class PLAYER(pygame.sprite.Sprite):
                     current_time+=5
                     self.directionX=1
                     self.directionY=0
-                    print("previous time  ",self.previous_time)
-                    print("current time : ",current_time)
+                    # print("previous time  ",self.previous_time)
+                    # print("current time : ",current_time)
                     if current_time % 15==0:
                         self.bullets.add(blt.BULLET(self.rect.x,self.rect.y,self.directionX,self.directionY,self.atkSpeed))
                         self.previous_time=current_time      

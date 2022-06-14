@@ -12,10 +12,14 @@ def menuPrincipal(funcStart,loop):
     change_Player1_menu=changePlayer(player1)
     change_Player2_menu=changePlayer(player2)
     menu = pygame_menu.Menu('Welcome', WIDTH, HEIGHT,
-                        theme=pygame_menu.themes.THEME_BLUE)
+                        theme=pygame_menu.themes.THEME_GREEN)
     menu.add.button('Play', funcStart)
     menu.add.button('Change Player 1', change_Player1_menu)
     menu.add.button('Change Player 2', change_Player2_menu)
+    if player2.isIA:
+        menu.add.button('Player vs Player', player2.setIA)
+    else:
+        menu.add.button('Player vs Player', player2.setIA)
     menu.add.button('High Scores', ScoreBoard)
     menu.add.button('Quit', pygame_menu.events.EXIT)
     surface = create_example_window('TopDownShooter', (WIDTH, HEIGHT))
@@ -25,7 +29,7 @@ def menuPrincipal(funcStart,loop):
         return menu
 def changePlayer(player):
     change_Player_menu = pygame_menu.Menu(player.name, WIDTH, HEIGHT,
-    theme=pygame_menu.themes.THEME_BLUE)
+    theme=pygame_menu.themes.THEME_GREEN)
     change_Player_menu.add.text_input('Name :', default=player.name,onchange=player.changeName)
     change_Player_menu.add.text_input('MAXHP :', default=str(player.maxHP),onchange=player.changePlayerHP)
     change_Player_menu.add.text_input('Damage :', default=str(player.Dmg),onchange=player.changePlayerDamage)
@@ -37,13 +41,13 @@ def changePlayer(player):
 
 def scoreOfGame(str,title):
     menu = pygame_menu.Menu(title, WIDTH, HEIGHT,
-                            theme=pygame_menu.themes.THEME_BLUE,)
+                            theme=pygame_menu.themes.THEME_GREEN,)
     menu.add.button(str, displayScoreBoard)
     return menu
 def scoreEndGame(funcStart,str):
     menu_Principal=menuPrincipal(funcStart,False)
     menu = pygame_menu.Menu("Game Over", WIDTH, HEIGHT,
-                            theme=pygame_menu.themes.THEME_BLUE,)
+                            theme=pygame_menu.themes.THEME_GREEN,)
     surface = create_example_window('TopDownShooter', (WIDTH, HEIGHT))
     # menu.add.button("Menu Principal", menuPrincipal(funcStart))
     menu.add.button(str, )
@@ -54,7 +58,7 @@ def scoreEndGame(funcStart,str):
 
 def displayScoreBoard():
     menu = pygame_menu.Menu('Score Board', WIDTH, HEIGHT,
-                            theme=pygame_menu.themes.THEME_BLUE,)
+                            theme=pygame_menu.themes.THEME_GREEN,)
     # surface = create_example_window('TopDownShooter', (WIDTH, HEIGHT))
     scores=db.getScores()
     for i in scores:

@@ -8,6 +8,9 @@ RED = (255,0,0)
 GREEN = (0,255,0)
 BLUE = (0,0,255)
 MediumOrchid=(186, 85, 211)
+lightBlue=(70, 130, 180)
+midnightBlue=(25, 25, 112)
+Gray=(128, 128, 128)
 #la taille de l'écran
 WIDTH=800
 HEIGHT=600
@@ -22,13 +25,17 @@ def InitSettings():
     player2Data=db.getPlayerData(2)
     if player1Data:
         player1 = PLAYER(WIDTH-100, HEIGHT-100,"Man 1.png",player1Data[0][0],1,score=0
-        ,HP=player1Data[0][2],Dmg=player1Data[0][3],atkSpeed=player1Data[0][4],lives=player1Data[0][1],speed=player1Data[0][5],color=GREEN)
+        ,HP=player1Data[0][2],Dmg=player1Data[0][3],atkSpeed=player1Data[0][4],lives=player1Data[0][1],speed=player1Data[0][5],color=midnightBlue)
     else:
-        player1 = PLAYER(WIDTH-100, HEIGHT-100,"Man 1.png","Midouch",1,atkSpeed=50,color=GREEN) # joueur1
+        player1 = PLAYER(WIDTH-100, HEIGHT-100,"Man 1.png","Midouch",1,atkSpeed=50,color=midnightBlue) # joueur1
     if player2Data:
+        if player1Data[0][6]=="1":
+            IA=True
+        else:
+            IA=False
         player2 = PLAYER(WIDTH-(player1.rect.x), HEIGHT-(player1.rect.y),"Man 1.png",player2Data[0][0],2,score=0
-        ,HP=player2Data[0][2],Dmg=player2Data[0][3],atkSpeed=player2Data[0][4],lives=player2Data[0][1],speed=player2Data[0][5],isIA=True,color=MediumOrchid)
+        ,HP=player2Data[0][2],Dmg=player2Data[0][3],atkSpeed=player2Data[0][4],lives=player2Data[0][1],speed=player2Data[0][5],isIA=IA,color=MediumOrchid)
     else:
-        player2 = PLAYER(WIDTH-(player1.rect.x), HEIGHT-(player1.rect.y),"Man 1.png","CDM",2,True,color=MediumOrchid) # joueur2
+        player2 = PLAYER(WIDTH-(player1.rect.x), HEIGHT-(player1.rect.y),"Man 1.png","CDM",2,isIA=True,color=MediumOrchid) # joueur2
     return player1,player2
 player1,player2=InitSettings()
