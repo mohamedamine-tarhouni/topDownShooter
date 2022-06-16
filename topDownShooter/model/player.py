@@ -85,13 +85,7 @@ class PLAYER(pygame.sprite.Sprite):
     def changeMoveSet(self, buttons):
         self.moveset = [buttons[0],buttons[1],buttons[2],buttons[3]]
     def updateScore(self,score):
-        # multiplier=200000
         multiplier=50000//(((self.maxHP+self.atkSpeed+self.Dmg+self.lives)))
-        
-        # multiplier=multiplier//self.maxHP
-        # multiplier=multiplier//self.Dmg
-        # multiplier=multiplier//self.atkSpeed
-        # score=score//self.lives
         self.score+=multiplier*score+2500
     def decreaseScore(self,score):
         self.score-=score
@@ -110,16 +104,7 @@ class PLAYER(pygame.sprite.Sprite):
         if self.HP<=0:
             self.isDead=True
             self.HP=0
-    def respawn(self,player):
-        if self.isDead:
-            self.decreaseScore(100)
-            x=randint(50,stn.WIDTH-50)
-            y=randint(50,stn.HEIGHT-50)
-            self.rect.center=(x,y)
-            self.HP=self.maxHP
-            self.decreaseLives()
-            player.updateScore(500)
-            self.isDead=False
+
     def changeName(self,name):
         if(name!=""):
             self.name=name
@@ -167,7 +152,16 @@ class PLAYER(pygame.sprite.Sprite):
             #on input change your value is returned here
             db.insertValue(self,self.pos)
         print('Player speed is', self.speed)
-    
+    def respawn(self,player):
+        if self.isDead:
+            self.decreaseScore(100)
+            x=randint(50,stn.WIDTH-50)
+            y=randint(50,stn.HEIGHT-50)
+            self.rect.center=(x,y)
+            self.HP=self.maxHP
+            self.decreaseLives()
+            player.updateScore(500)
+            self.isDead=False
     def setIA(self):
         self.isIA=not(self.isIA)
         print(self.isIA)
@@ -184,10 +178,6 @@ class PLAYER(pygame.sprite.Sprite):
         distY=self.rect.y-self.opponent.rect.y
         distanceX=abs(distX)
         distanceY=abs(distY)
-        # print("distance x : ",distX)
-        # print("distance y : ",distY)
-        # print("distance absolute x : ",distanceX)
-        # print("distance absolute y : ",distanceY)
         if distanceX<distanceY:
             if distX<0 and distanceX>advSpeed:
                 self.rect.x += advSpeed
@@ -198,7 +188,6 @@ class PLAYER(pygame.sprite.Sprite):
                 if self.rect.right<50:
                     self.rect.left=stn.WIDTH
             elif distanceX<=15:
-                print("on est en attaque X")
                 if distY<0:
                     current_time = pygame.time.get_ticks()
                     current_time+=5
@@ -230,14 +219,11 @@ class PLAYER(pygame.sprite.Sprite):
                 if self.rect.bottom<50:
                     self.rect.top=stn.HEIGHT
             elif distanceY<=15:
-                # print("on est en attaque Y")
                 if distX<0:
                     current_time = pygame.time.get_ticks()
                     current_time+=5
                     self.directionX=-1
                     self.directionY=0
-                    # print("previous time  ",self.previous_time)
-                    # print("current time : ",current_time)
                     if current_time % 15==0:
                         self.bullets.add(blt.BULLET(self.rect.x,self.rect.y,self.directionX,self.directionY,self.atkSpeed))
                         self.previous_time=current_time
@@ -246,8 +232,6 @@ class PLAYER(pygame.sprite.Sprite):
                     current_time+=5
                     self.directionX=1
                     self.directionY=0
-                    # print("previous time  ",self.previous_time)
-                    # print("current time : ",current_time)
                     if current_time % 15==0:
                         self.bullets.add(blt.BULLET(self.rect.x,self.rect.y,self.directionX,self.directionY,self.atkSpeed))
                         self.previous_time=current_time      
