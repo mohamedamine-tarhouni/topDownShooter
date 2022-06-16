@@ -73,9 +73,9 @@ def start_the_game():
                 if event.key==pygame.K_SPACE and stn.player2.isIA==False:
                     stn.player2.bullets.add(BULLET(stn.player2.rect.x,stn.player2.rect.y,stn.player2.directionX,stn.player2.directionY,stn.player2.atkSpeed))
                     # HANDLES BUTTON PRESSES
-            # if event.type == pygame.JOYBUTTONDOWN:
-                # if event.button == button_keys['x']:
-                #     bullets_P1.add(BULLET(stn.player1.rect.x,stn.player1.rect.y,stn.player1.directionX,stn.player1.directionY,stn.player1.atkSpeed))
+            if event.type == pygame.JOYBUTTONDOWN:
+                if event.button == button_keys['x']:
+                    bullets_P1.add(BULLET(stn.player1.rect.x,stn.player1.rect.y,stn.player1.directionX,stn.player1.directionY,stn.player1.atkSpeed))
             if event.type == pygame.JOYBUTTONDOWN:
                 if event.button == button_keys['left_arrow']:
                     LEFT = True
